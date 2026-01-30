@@ -1,1 +1,108 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dump It — Jouer</title>
+  <meta name="description" content="Dump It est un jeu mobile gratuit basé sur l’exploration, la coopération et la progression. Découvrez les mécaniques de jeu." />
+  <style>
+    :root{--bg:#07101f;--border:rgba(255,255,255,.12);--card:rgba(255,255,255,.06);--max:1180px}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:system-ui;background:var(--bg);color:#fff}
+    a{color:#fff;text-decoration:none}
+    .topbar{
+      position:sticky;top:0;z-index:20;
+      background:rgba(7,16,31,.65);backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+    .topbar .wrap{max-width:var(--max);margin:0 auto;padding:10px 16px;display:flex;justify-content:space-between}
+    .nav{display:flex;gap:12px;font-size:14px}
+    .layout{max-width:var(--max);margin:0 auto;padding:18px 16px 60px;display:grid;gap:18px}
+    @media(min-width:980px){.layout{grid-template-columns:260px 1fr}}
+    .toc{
+      position:sticky;top:68px;align-self:start;
+      border:1px solid var(--border);background:var(--card);
+      border-radius:14px;padding:12px
+    }
+    .toc a{display:block;padding:8px 10px;border-radius:10px;opacity:.85}
+    .toc a.active{background:rgba(255,255,255,.10);opacity:1;font-weight:800}
+    .section{margin:18px 0 26px}
+    .section h2{margin:0 0 8px}
+    .card{border:1px solid var(--border);background:var(--card);border-radius:16px;padding:14px}
+    .cta{margin-top:14px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:12px;background:#fff;color:#07101f;font-weight:900}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <strong><a href="/">Dump It</a></strong>
+      <div class="nav">
+        <a href="/joueur/">Jouer</a>
+        <a href="/marques/">Marques</a>
+        <a href="/communes/">Communes</a>
+        <a href="mailto:guillaume.delaune@dumpit.fr">Contact</a>
+      </div>
+    </div>
+  </div>
 
+  <div class="layout">
+    <nav class="toc" id="toc">
+      <a href="#intro">Intro</a>
+      <a href="#loop">Boucle de jeu</a>
+      <a href="#meca">Mécaniques</a>
+      <a href="#pourquoi">Pourquoi on y joue</a>
+    </nav>
+
+    <main>
+      <section id="intro" class="section">
+        <h2>Un vrai jeu mobile</h2>
+        <div class="card">
+          Dump It est un jeu mobile gratuit basé sur l’exploration, la coopération et la progression.
+          Tu joues dehors, mais avec des mécaniques de jeu pensées comme un vrai game design.
+        </div>
+      </section>
+
+      <section id="loop" class="section">
+        <h2>La boucle de jeu</h2>
+        <div class="card">
+          Explorer → accomplir des missions → gagner de l’expérience → coopérer → recommencer.
+        </div>
+      </section>
+
+      <section id="meca" class="section">
+        <h2>Les mécaniques</h2>
+        <div class="card">
+          Missions, événements, progression, guildes et objectifs collectifs.
+        </div>
+      </section>
+
+      <section id="pourquoi" class="section">
+        <h2>Pourquoi on y joue</h2>
+        <div class="card">
+          Parce que c’est fun.  
+          Parce que c’est social.  
+          Parce que chaque action compte, sans jamais forcer.
+        </div>
+        <div class="cta">
+          <a class="btn" href="mailto:guillaume.delaune@dumpit.fr">Suivre le projet</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const links=[...document.querySelectorAll('#toc a')];
+    const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+    const o=new IntersectionObserver(es=>{
+      const v=es.filter(e=>e.isIntersecting)[0];
+      if(!v) return;
+      links.forEach(l=>l.classList.remove('active'));
+      const a=links.find(l=>l.getAttribute('href')==='#'+v.target.id);
+      if(a) a.classList.add('active');
+    },{rootMargin:"-20% 0px -70% 0px"});
+    secs.forEach(s=>o.observe(s));
+  </script>
+</body>
+</html>
