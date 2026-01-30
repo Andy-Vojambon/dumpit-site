@@ -1,1 +1,117 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dump It — Communes</title>
+  <style>
+    :root{--bg:#07101f;--border:rgba(255,255,255,.12);--card:rgba(255,255,255,.06);--max:1180px}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:system-ui;background:var(--bg);color:#fff}
+    a{color:#fff;text-decoration:none}
+    .topbar{
+      position:sticky;top:0;z-index:20;
+      background:rgba(7,16,31,.65);backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+    .topbar .wrap{max-width:var(--max);margin:0 auto;padding:10px 16px;display:flex;justify-content:space-between;align-items:center}
+    .brand{font-weight:900}
+    .nav{display:flex;gap:12px;font-size:14px;opacity:.95}
+    .layout{max-width:var(--max);margin:0 auto;padding:18px 16px 60px;display:grid;gap:18px}
+    @media(min-width:980px){ .layout{grid-template-columns:260px 1fr} }
+    .toc{
+      position:sticky; top:68px; align-self:start;
+      border:1px solid var(--border); background:var(--card);
+      border-radius:14px; padding:12px;
+    }
+    .toc a{display:block;padding:8px 10px;border-radius:10px;opacity:.85}
+    .toc a.active{background:rgba(255,255,255,.10);opacity:1;font-weight:800}
+    .content h1{margin:12px 0 6px}
+    .muted{opacity:.85;line-height:1.45}
+    .section{margin:18px 0 26px}
+    .section h2{margin:0 0 10px}
+    .slide{
+      margin:14px 0;border-radius:18px;overflow:hidden;
+      border:1px solid var(--border);background:rgba(255,255,255,.04);
+      box-shadow:0 16px 40px rgba(0,0,0,.35);
+    }
+    .slide img{width:100%;height:auto;display:block}
+    .cta{
+      border:1px solid var(--border);background:var(--card);
+      border-radius:16px;padding:14px;margin-top:18px
+    }
+    .btn{display:inline-block;margin-top:10px;padding:10px 14px;border-radius:12px;background:#fff;color:#07101f;font-weight:900}
+    .btn.secondary{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.28);font-weight:750}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <div class="brand"><a href="/">Dump It</a></div>
+      <div class="nav">
+        <a href="/marques/">Marques</a>
+        <a href="/communes/">Communes</a>
+        <a href="mailto:guillaume.delaune@dumpit.fr">Contact</a>
+      </div>
+    </div>
+  </div>
 
+  <div class="layout">
+    <!-- Sommaire sticky -->
+    <nav class="toc" id="toc">
+      <a href="#intro">Intro</a>
+      <a href="#pourquoi">Pourquoi ça change un magasin</a>
+      <a href="#comment">Comment ça marche</a>
+      <a href="#pilote">Proposer un pilote</a>
+    </nav>
+
+    <!-- Contenu -->
+    <main class="content">
+      <h1>Parcours Marques</h1>
+      <p class="muted">Dump It transforme un point de vente en expérience vécue. Voici l’essentiel, en slides.</p>
+
+      <section id="intro" class="section">
+        <h2>Intro</h2>
+        <div class="slide"><img src="/slides/20-communes.jpg" alt="Marques — Slide 1" loading="lazy"></div>
+      </section>
+
+      <section id="pourquoi" class="section">
+        <h2>Pourquoi ça change un magasin</h2>
+        <div class="slide"><img src="/slides/21-communes.jpg" alt="Marques — Slide 2" loading="lazy"></div>
+        <div class="slide"><img src="/slides/22-communes.jpg" alt="Marques — Slide 3" loading="lazy"></div>
+      </section>
+
+      <section id="comment" class="section">
+        <h2>Comment ça marche</h2>
+        <div class="slide"><img src="/slides/23-communes.jpg" alt="Marques — Slide 4" loading="lazy"></div>
+      </section>
+
+      <section id="pilote" class="section">
+        <h2>Proposer un pilote</h2>
+        <div class="cta">
+          <div>On échange sur un test local (1 ou plusieurs points de vente) ?</div>
+          <a class="btn" href="mailto:guillaume.delaune@dumpit.fr?subject=Dump%20It%20—%20Pilote%20Marque">Contacter</a>
+          <a class="btn secondary" href="/">Retour accueil</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Highlight du sommaire selon le scroll (light, efficace)
+    const links = Array.from(document.querySelectorAll('#toc a'));
+    const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+    const obs = new IntersectionObserver((entries) => {
+      const visible = entries.filter(e => e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+      if(!visible) return;
+      links.forEach(l => l.classList.remove('active'));
+      const active = links.find(l => l.getAttribute('href') === '#' + visible.target.id);
+      if(active) active.classList.add('active');
+    }, { rootMargin: "-20% 0px -70% 0px", threshold: [0.05, 0.2, 0.6] });
+
+    sections.forEach(s => obs.observe(s));
+  </script>
+</body>
+</html>
