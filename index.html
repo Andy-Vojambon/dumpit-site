@@ -3,24 +3,160 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dump It</title>
+  <title>Dump It — Un jeu mobile qui transforme nos rues en terrain de jeu</title>
+  <meta name="description" content="Dump It est un jeu mobile qui transforme nos rues en terrain de jeu. Découvrez le jeu, puis des parcours dédiés Joueurs, Marques et Collectivités." />
+  <link rel="canonical" href="https://dumpit.fr/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Dump It" />
+  <meta property="og:description" content="Un jeu mobile qui transforme nos rues en terrain de jeu." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dumpit.fr/" />
+  <meta property="og:image" content="https://dumpit.fr/assets/og.jpg" />
+
   <style>
-    body{margin:0;font-family:system-ui;background:#07101f;color:#fff}
-    .wrap{max-width:980px;margin:0 auto;padding:40px 16px}
-    a{color:#fff;text-decoration:none}
-    .btn{display:inline-block;margin:10px 10px 0 0;padding:12px 16px;border-radius:12px;background:#fff;color:#07101f;font-weight:800}
-    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;font-weight:700}
+    :root{
+      --bg:#07101f;
+      --border:rgba(255,255,255,.12);
+      --card:rgba(255,255,255,.06);
+      --max:980px;
+    }
+    *{ box-sizing:border-box }
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:var(--bg);
+      color:#fff;
+    }
+    a{ color:#fff; text-decoration:none }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:48px 16px }
+    h1{ margin:0 0 12px; font-size:42px }
+    p{ margin:0; opacity:.9; line-height:1.45 }
+    .muted{ opacity:.75; font-size:14px }
+
+    .cards{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
+      margin-top:28px;
+    }
+    @media(min-width:900px){
+      .cards{ grid-template-columns:1fr 1fr 1fr }
+    }
+
+    .card{
+      border:1px solid var(--border);
+      background:var(--card);
+      border-radius:18px;
+      padding:18px;
+      box-shadow:0 14px 34px rgba(0,0,0,.35);
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .card h2{ margin:0; font-size:20px }
+    .card p{ margin:0; opacity:.9 }
+
+    .btn{
+      margin-top:auto;
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:12px;
+      background:#fff;
+      color:#07101f;
+      font-weight:900;
+      text-align:center;
+    }
+
+    header{
+      border-bottom:1px solid var(--border);
+      background:rgba(7,16,31,.6);
+      backdrop-filter:blur(10px);
+    }
+    header .wrap{
+      padding:12px 16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .nav{ display:flex; gap:12px; font-size:14px; opacity:.95 }
+
+    footer{
+      border-top:1px solid var(--border);
+      padding:24px 16px 40px;
+      text-align:center;
+      opacity:.85;
+    }
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <h1>Dump It</h1>
-    <p>Un jeu mobile qui transforme nos rues en terrain de jeu.</p>
-    <a class="btn" href="/marques/">Je suis une marque</a>
-    <a class="btn secondary" href="/communes/">Je suis une collectivité</a>
-    <p style="opacity:.8;margin-top:24px">
-      Contact : <a href="mailto:guillaume.delaune@dumpit.fr">guillaume.delaune@dumpit.fr</a>
+  <!-- Header -->
+  <header>
+    <div class="wrap">
+      <strong>Dump It</strong>
+      <nav class="nav">
+        <a href="/joueur/">Jouer</a>
+        <a href="/marques/">Marques</a>
+        <a href="/communes/">Communes</a>
+        <a href="mailto:guillaume.delaune@dumpit.fr">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main class="wrap">
+    <h1>Un jeu mobile qui transforme nos rues en terrain de jeu</h1>
+    <p>
+      Dump It est un jeu gratuit basé sur l’exploration, la coopération et la progression.
+      Découvrez le concept, puis accédez au parcours qui vous concerne.
     </p>
-  </div>
+    <p class="muted" style="margin-top:8px;">
+      Projet en cours d’expérimentation • Partenariats publics & privés
+    </p>
+
+    <!-- 3 parcours -->
+    <section class="cards">
+      <!-- Joueur -->
+      <div class="card">
+        <h2>🎮 Joueur</h2>
+        <p>
+          Découvrir le gameplay, la boucle de jeu, les mécaniques et
+          pourquoi on y joue avant tout pour le fun.
+        </p>
+        <a class="btn" href="/joueur/">Voir le jeu</a>
+      </div>
+
+      <!-- Marques -->
+      <div class="card">
+        <h2>🏬 Marques</h2>
+        <p>
+          Comprendre comment Dump It transforme un point de vente
+          en expérience vécue et mesurable.
+        </p>
+        <a class="btn" href="/marques/">Parcours marques</a>
+      </div>
+
+      <!-- Communes -->
+      <div class="card">
+        <h2>🏙️ Collectivités</h2>
+        <p>
+          Découvrir comment lancer un pilote local pour engager
+          les habitants autrement.
+        </p>
+        <a class="btn" href="/communes/">Parcours collectivités</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div>Contact : <a href="mailto:guillaume.delaune@dumpit.fr">guillaume.delaune@dumpit.fr</a></div>
+    <div class="muted">© <span id="y"></span> • dumpit.fr</div>
+  </footer>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
