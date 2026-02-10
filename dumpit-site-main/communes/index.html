@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dump It — Collectivités</title>
+  <meta name="description" content="Dump It aide les collectivités à engager les citoyens via un gameplay terrain mesurable.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="./communes.css">
+
+  <!-- ✅ EXEMPLES : barre = 5 mini-artworks carrés cliquables + overlay (✅ beaucoup moins sombre) -->
+  <style>
+    #comStoryClip{ position: relative; }
+
+    /* ✅ overlay sur TOUTE la section exemples — BEAUCOUP PLUS LIGHT */
+    #comStoryTrack{ position: relative; z-index: 1; }
+    #comStoryOverlay{
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+
+      /* ✅ FIX: 50% moins sombre -> on baisse l'opacité et on allège les noirs */
+      opacity: .46;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(255,255,255,.14), rgba(255,255,255,0) 60%),
+        radial-gradient(ellipse at center, rgba(0,0,0,0) 52%, rgba(0,0,0,.26) 100%),
+        linear-gradient(to bottom, rgba(7,16,31,.04), rgba(7,16,31,.34));
+    }
+
+    /* UI au-dessus de l’overlay */
+    #comStory .story-caption{ position: relative; z-index: 4; }
+    #comStoryProgress{ z-index: 6; }
+
+    /* ✅ bulle plus claire + texte plus contrasté */
+    #comStory .story-caption{
+      background: rgba(7,16,31,.44);
+      border-color: rgba(255,255,255,.18);
+    }
+    #comStory .story-caption h2{ opacity: 1; }
+    #comStory .story-caption p{ opacity: .96; }
+
+    #comStoryProgress{
+      position:absolute;
+      left:50%;
+      bottom: calc(16px * var(--s));
+      transform: translateX(-50%);
+      z-index: 6;
+
+      display:flex;
+      align-items:center;
+      gap: calc(10px * var(--s));
+
+      padding: calc(10px * var(--s)) calc(12px * var(--s));
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(7,16,31,.55);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 22px 70px rgba(0,0,0,.45);
+
+      width: max-content;
+      max-width: min(92vw, 760px);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    #comStoryProgress::-webkit-scrollbar{ display:none; }
+
+    .story-thumb{
+      position:relative;
+      width: calc(54px * var(--s));
+      height: calc(54px * var(--s));
+      border-radius: calc(14px * var(--s));
+      overflow:hidden;
+
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      padding: 0;
+      cursor: pointer;
+      outline: none;
+
+      opacity: .70;
+      filter: grayscale(1) brightness(.82) contrast(1.05);
+      transition: transform .16s ease, opacity .16s ease, filter .16s ease, border-color .16s ease;
+      flex: 0 0 auto;
+    }
+    .story-thumb img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.02);
+    }
+
+    .story-thumb:hover,
+    .story-thumb:focus-visible{
+      transform: translateY(-1px);
+      opacity: .88;
+      border-color: rgba(255,255,255,.22);
+    }
+
+    .story-thumb.is-active{
+      opacity: 1;
+      filter: none;
+      border-color: rgba(255,255,255,.26);
+      transform: translateY(-1px);
+    }
+    .story-thumb.is-active::after{
+      content:"";
+      position:absolute;
+      left: 10%;
+      right: 10%;
+      bottom: 6px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--accent, rgba(88,185,255,1));
+      box-shadow: 0 10px 28px rgba(0,0,0,.35);
+    }
+
+    @media (max-width: 600px){
+      #comStoryProgress{
+        bottom: calc(14px * var(--s));
+        gap: calc(8px * var(--s));
+        padding: calc(9px * var(--s)) calc(10px * var(--s));
+      }
+      .story-thumb{
+        width: calc(50px * var(--s));
+        height: calc(50px * var(--s));
+      }
+    }
+  </style>
+</head>
+
+<body class="page-communes">
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="Dump It - Accueil">
+      <img src="../assets/logo.webp" alt="Logo Dump It">
+      <strong>Dump It</strong>
+    </a>
+
+    <nav class="nav">
+      <a href="../joueur/index.html">Jouer</a>
+      <a href="../marques/index.html#top">Marques</a>
+      <a href="./index.html" aria-current="page">Collectivités</a>
+      <a href="mailto:guillaume.delaune@dumpit.fr">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="com-hero fullbleed section-band" aria-label="Dump It — Collectivités">
+  <div class="edge-wrap">
+    <div class="com-heroShell">
+      <img class="com-heroArt" src="../assets/artworks/com-hero.webp" alt="Dump It — Collectivités">
+      <div class="com-heroOverlay" aria-hidden="true"></div>
+
+      <div class="com-heroCaption" tabindex="0">
+        <span class="com-tag">Collectivités</span>
+
+        <h1 class="com-title">Engager les citoyens. Mesurer l’impact</h1>
+
+        <p class="com-lead">
+          Pas une campagne. Un <strong>jeu</strong> qui transforme la ville en parcours.
+          Avec des résultats concrets : participation, zones, progression, rétention.
+        </p>
+
+        <div class="com-cta">
+          <a class="btn btn-ghost" href="#comStory">Voir des exemples</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pilotage fullbleed section-band" id="pilotage" aria-label="Pilote collectivité">
+  <div class="edge-wrap">
+    <div class="pilotage-shell">
+      <div class="pilotage-inner">
+
+        <h2 class="pilotage-title">COMMENT LANCER UN PILOTE COLLECTIVITÉ ?</h2>
+
+        <div class="pil-grid">
+          <div class="pil-card" tabindex="0">
+            <img src="../assets/icons/com-1.webp" alt="">
+            <h3>DÉFINIR<br>LES ZONES & OBJECTIFS</h3>
+          </div>
+
+          <div class="pil-card" tabindex="0">
+            <img src="../assets/icons/com-2.webp" alt="">
+            <h3>LANCER<br>DES MISSIONS TERRAIN</h3>
+          </div>
+
+          <div class="pil-card" tabindex="0">
+            <img src="../assets/icons/com-3.webp" alt="">
+            <h3>MOBILISER<br>LES COMMUNAUTÉS</h3>
+          </div>
+
+          <div class="pil-card" tabindex="0">
+            <img src="../assets/icons/com-4.webp" alt="">
+            <h3>SUIVRE<br>LES INDICATEURS</h3>
+          </div>
+        </div>
+
+        <div class="pil-footer">
+          DUMP IT TRANSFORME UNE ACTION CIVIQUE<br>
+          EN PARTICIPATION VOLONTAIRE ET MESURABLE
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="story story-band fullbleed" id="comStory" aria-label="Exemples collectivités">
+  <div class="edge-wrap">
+    <div class="story-shell">
+      <div class="story-clip" id="comStoryClip">
+        <div class="story-track" id="comStoryTrack">
+
+          <article class="story-panel is-active" data-i="0">
+            <img class="story-img" src="../assets/artworks/com-ex-01.webp" alt="Exemple 01">
+            <div class="story-caption center" tabindex="0">
+              <span class="story-kicker">EXEMPLES · 01 / 05</span>
+              <h2>Parcours quartier</h2>
+              <p>Des objectifs locaux, un loop simple, une progression visible.</p>
+            </div>
+          </article>
+
+          <article class="story-panel" data-i="1">
+            <img class="story-img" src="../assets/artworks/com-ex-02.webp" alt="Exemple 02">
+            <div class="story-caption center" tabindex="0">
+              <span class="story-kicker">EXEMPLES · 02 / 05</span>
+              <h2>Event limité</h2>
+              <p>Une fenêtre courte + récompenses = pic de participation.</p>
+            </div>
+          </article>
+
+          <article class="story-panel" data-i="2">
+            <img class="story-img" src="../assets/artworks/com-ex-03.webp" alt="Exemple 03">
+            <div class="story-caption center" tabindex="0">
+              <span class="story-kicker">EXEMPLES · 03 / 05</span>
+              <h2>Classement & saisons</h2>
+              <p>Rangs, objectifs, prestige : une boucle longue durée.</p>
+            </div>
+          </article>
+
+          <article class="story-panel" data-i="3">
+            <img class="story-img" src="../assets/artworks/com-ex-04.webp" alt="Exemple 04">
+            <div class="story-caption center" tabindex="0">
+              <span class="story-kicker">EXEMPLES · 04 / 05</span>
+              <h2>Guilde / associations</h2>
+              <p>Mobilisation organique via groupes existants.</p>
+            </div>
+          </article>
+
+          <article class="story-panel" data-i="4">
+            <img class="story-img" src="../assets/artworks/com-ex-05.webp" alt="Exemple 05">
+            <div class="story-caption center" tabindex="0">
+              <span class="story-kicker">EXEMPLES · 05 / 05</span>
+              <h2>Dashboard résultats</h2>
+              <p>Zones, complétions, rétention : des métriques exploitables.</p>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- ✅ overlay sur toute la section exemples (✅ beaucoup moins sombre) -->
+        <div id="comStoryOverlay" aria-hidden="true"></div>
+
+        <div class="story-progress" id="comStoryProgress" aria-label="Navigation des exemples"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="com-buy fullbleed section-band" id="comBuy" aria-label="Ce que la commune achète">
+  <div class="edge-wrap">
+    <div class="com-buyShell">
+      <h2 class="com-buyTitle">CE QUE LA COMMUNE ACHÈTE</h2>
+      <p class="com-buyLead">Un pack clair : pilotage, activation terrain, mesure, et reporting.</p>
+
+      <div class="com-buyGrid">
+        <div class="com-buyCard" tabindex="0">
+          <img src="../assets/icons/com-buy-1.webp" alt="" style="--buyBox:150px; --buyZoom:1.2;">
+          <h3>CONFIGURATION</h3>
+          <p>Zones, objectifs, règles locales, paramètres de missions.</p>
+        </div>
+
+        <div class="com-buyCard" tabindex="0">
+          <img src="../assets/icons/com-buy-2.webp" alt="" style="--buyBox:150px; --buyZoom:2;">
+          <h3>MISSIONS & ÉVÉNEMENTS</h3>
+          <p>Défis limités, saisons, classements, mécaniques d’engagement.</p>
+        </div>
+
+        <div class="com-buyCard" tabindex="0">
+          <img src="../assets/icons/com-buy-3.webp" alt="" style="--buyBox:150px; --buyZoom:1.7;">
+          <h3>ANIMATION</h3>
+          <p>Activation associations/écoles, packs de communication, relais.</p>
+        </div>
+
+        <div class="com-buyCard" tabindex="0">
+          <img src="../assets/icons/com-buy-4.webp" alt="" style="--buyBox:150px; --buyZoom:1.2;">
+          <h3>REPORTING</h3>
+          <p>Dashboard, métriques, export, bilans et recommandations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="com-support fullbleed section-band" id="comSupport" aria-label="Nous soutenir">
+  <div class="edge-wrap">
+    <div class="com-supportShell">
+      <img class="com-supportArt" src="../assets/artworks/com-support.webp" alt="" aria-hidden="true">
+      <div class="com-supportOverlay" aria-hidden="true"></div>
+
+      <div class="com-supportPanel" tabindex="0">
+        <span class="com-supportTag">Collectivités</span>
+        <h2 class="com-supportTitle">Nous soutenir</h2>
+        <p class="com-supportText">
+          Vous voulez lancer un pilote, soutenir le déploiement, ou co-construire une version adaptée à votre territoire ?
+        </p>
+        <a class="btn" href="./nous-soutenir-communes.html">Nous soutenir</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter fullbleed section-band" id="newsletter">
+  <div class="edge-wrap">
+    <div class="news-wrap">
+      <img class="news-art" src="../assets/artworks/newsletter.webp" alt="Newsletter Dump It">
+
+      <div class="news-panel">
+        <span class="news-tag">Newsletter</span>
+        <h3 class="news-title">Recevoir les prochaines annonces</h3>
+        <p class="news-desc">Build, trailer, bêta, partenariats… l’essentiel. Pas de spam.</p>
+
+        <form class="news-form" action="#" onsubmit="return false;">
+          <input type="email" placeholder="Ton email" required>
+          <button class="btn" type="submit">S’inscrire</button>
+        </form>
+
+        <p class="news-legal">
+          En t’inscrivant, tu acceptes de recevoir des emails liés au projet Dump It.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer fullbleed">
+  <div class="footer-social">
+    <span>Suivre Dump It</span>
+    <div class="social-links">
+      <a href="#" aria-label="X / Twitter">✕</a>
+      <a href="#" aria-label="Instagram">📸</a>
+      <a href="#" aria-label="YouTube">▶</a>
+      <a href="#" aria-label="Discord">💬</a>
+      <a href="#" aria-label="LinkedIn">in</a>
+    </div>
+  </div>
+
+  <div class="wrap footer-main">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="../assets/logo.webp" alt="Logo Dump It">
+        <span>Dump It</span>
+      </div>
+      <a href="#" class="footer-cta">Télécharger l’app</a>
+    </div>
+
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Dump It</h4>
+        <a href="#">À propos</a>
+        <a href="#">Le jeu</a>
+        <a href="#">Communautés</a>
+        <a href="#">Actualités</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Professionnels</h4>
+        <a href="../marques/index.html">Marques</a>
+        <a href="./index.html">Collectivités</a>
+        <a href="#">Partenariats</a>
+        <a href="#">Presse</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="#">Aide</a>
+        <a href="mailto:guillaume.delaune@dumpit.fr">Contact</a>
+        <a href="#">FAQ</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Légal</h4>
+        <a href="#">Confidentialité</a>
+        <a href="#">Conditions d’utilisation</a>
+        <a href="#">Mentions légales</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">© 2026 • Dump It — Tous droits réservés</div>
+</footer>
+
+<script>
+/* ✅ FIX: la page démarre vraiment tout en haut (sauf si URL avec #anchor) */
+(function(){
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  function goTop(){
+    if (!location.hash) window.scrollTo(0, 0);
+  }
+  goTop();
+  window.addEventListener("load", goTop, { once: true });
+})();
+</script>
+
+<script>
+/* ✅ EXEMPLES : thumbs -> change panel + centre le thumb dans la barre */
+(function(){
+  const track = document.getElementById("comStoryTrack");
+  const progress = document.getElementById("comStoryProgress");
+  if(!track || !progress) return;
+
+  const panels = Array.from(track.querySelectorAll(".story-panel"));
+  const n = panels.length;
+  if(!n) return;
+
+  progress.innerHTML = panels.map((p, i) => {
+    const img = p.querySelector(".story-img");
+    const src = img ? img.getAttribute("src") : "";
+    const label = `Aller à l'exemple ${i + 1}`;
+    return `
+      <button class="story-thumb ${i === 0 ? "is-active" : ""}" type="button" data-i="${i}" aria-label="${label}">
+        <img src="${src}" alt="">
+      </button>
+    `;
+  }).join("");
+
+  const thumbs = Array.from(progress.querySelectorAll(".story-thumb"));
+  let active = 0;
+
+  function centerThumbInBar(btn){
+    if(!btn) return;
+    const parent = progress;
+    const left = btn.offsetLeft - (parent.clientWidth / 2) + (btn.clientWidth / 2);
+    parent.scrollTo({ left, behavior: "smooth" });
+  }
+
+  function setActive(i){
+    active = Math.max(0, Math.min(n - 1, i));
+
+    panels.forEach((p, idx) => {
+      p.classList.toggle("is-active", idx === active);
+      p.classList.toggle("is-before", idx < active);
+    });
+
+    thumbs.forEach((t, idx) => t.classList.toggle("is-active", idx === active));
+    centerThumbInBar(thumbs[active]);
+  }
+
+  progress.addEventListener("click", (e) => {
+    const btn = e.target.closest(".story-thumb");
+    if(!btn) return;
+    const i = Number(btn.dataset.i);
+    if(Number.isNaN(i)) return;
+    setActive(i);
+  });
+
+  progress.addEventListener("keydown", (e) => {
+    if(e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    e.preventDefault();
+    setActive(active + (e.key === "ArrowRight" ? 1 : -1));
+    thumbs[active]?.focus?.({ preventScroll:true });
+  });
+
+  setActive(0);
+})();
+</script>
+
+</body>
+</html>

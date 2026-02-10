@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dump It — Un jeu mobile qui transforme nos rues en terrain de jeu</title>
+  <meta name="description" content="Dump It est un jeu mobile basé sur l’exploration, la coopération et la progression.">
+
+  <!-- ✅ Police (proche PJ) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="./index.html" aria-label="Dump It - Accueil">
+      <img src="./assets/logo.webp" alt="Logo Dump It">
+      <strong>Dump It</strong>
+    </a>
+
+    <nav class="nav">
+      <a href="./joueur/index.html">Jouer</a>
+      <a href="./marques/index.html">Marques</a>
+      <a href="./communes/index.html">Collectivités</a>
+      <a href="mailto:guillaume.delaune@dumpit.fr">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- STORY (AAA card + scroll lock until panels done) -->
+<section class="story story-band fullbleed" id="story" aria-label="Introduction">
+  <div class="edge-wrap">
+    <div class="story-shell">
+      <div class="story-clip" id="storyClip">
+        <div class="story-track" id="storyTrack">
+
+          <article class="story-panel is-active" data-i="0">
+            <img class="story-img" src="./assets/artworks/home-1.webp" alt="Dump It — Artwork 1">
+          </article>
+
+          <article class="story-panel" data-i="1">
+            <img class="story-img" src="./assets/artworks/home-2.webp" alt="Dump It — Artwork 2">
+            <!-- ✅ tabindex pour interaction clavier (comme how-step) -->
+            <div class="story-caption center" tabindex="0">
+              <h2>La planète va mal</h2>
+              <p>
+                Chaque année, l’équivalent de <strong>100 tours Eiffel</strong> de déchets<br>
+                finit dans la nature, rien qu’en France.
+              </p>
+            </div>
+          </article>
+
+          <article class="story-panel" data-i="2">
+            <img class="story-img" src="./assets/artworks/home-3.webp" alt="Dump It — Artwork 3">
+            <div class="story-caption center" tabindex="0">
+              <h2>Des milliards d’heures</h2>
+              <p>
+                Chaque année, le gaming mobilise une énergie colossale.
+                Et si elle pouvait changer notre monde ?
+              </p>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="story-progress" id="storyProgress" aria-hidden="true"></div>
+
+        <div class="story-hint" id="storyHint" aria-hidden="true">
+          <span class="dot"></span>
+          <span>Scroll</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BANDE 3 CARDS -->
+<section class="section-band fullbleed" id="paths">
+  <div class="cards-band">
+    <div class="cards-grid">
+
+      <a class="card-strip" href="./joueur/index.html" style="--bgimg:url('./assets/artworks/card-joueur.webp');">
+        <div class="card-hud">
+          <h3>🎮 Joueur</h3>
+          <p>Découvrir le gameplay et les mécaniques du jeu.</p>
+          <span class="btn btn--full">Voir le jeu</span>
+        </div>
+      </a>
+
+      <a class="card-strip" href="./marques/index.html" style="--bgimg:url('./assets/artworks/card-marques.webp');">
+        <div class="card-hud">
+          <h3>🏬 Marques</h3>
+          <p>Transformer un point de vente en expérience vécue.</p>
+          <span class="btn btn--full">Parcours marques</span>
+        </div>
+      </a>
+
+      <a class="card-strip" href="./communes/index.html" style="--bgimg:url('./assets/artworks/card-collectivites.webp');">
+        <div class="card-hud">
+          <h3>🏙️ Collectivités</h3>
+          <p>Lancer un pilote local engageant.</p>
+          <span class="btn btn--full">Parcours collectivités</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- COMMENT CA MARCHE -->
+<section class="how" id="how">
+  <div class="edge-wrap">
+    <div class="how-wrap">
+      <img class="how-art" src="./assets/artworks/comment-ca-marche.webp" alt="Dump It — Comment ça marche">
+
+      <div class="how-inner">
+        <div class="how-kicker">Gameplay</div>
+        <h2 class="how-title">Comment ça marche</h2>
+
+        <div class="how-steps">
+          <div class="how-step" tabindex="0">
+            <div>
+              <strong>Explore. Scanne. Ramasse.</strong>
+              <div class="how-sub">Tu avances en jouant, dans la vraie vie.</div>
+            </div>
+            <div class="how-badge">1</div>
+          </div>
+
+          <div class="how-step" tabindex="0">
+            <div>
+              <strong>Transforme tes actions en progression</strong>
+              <div class="how-sub">XP, loot, objectifs : tout est lié à l’action.</div>
+            </div>
+            <div class="how-badge">2</div>
+          </div>
+
+          <div class="how-step" tabindex="0">
+            <div>
+              <strong>Solo ou en guilde</strong>
+              <div class="how-sub">Coopère, monte en rang, domine l’arène.</div>
+            </div>
+            <div class="how-badge">3</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-gap fullbleed"></div>
+
+<!-- ENGAGEMENTS -->
+<section class="section-band fullbleed">
+  <div class="wrap">
+    <div class="engagements">
+      <div class="eng-grid">
+
+        <div class="eng-card">
+          <img src="./assets/icons/securite-joueur.webp" alt="Sécurité joueur">
+          <h3>Sécurité joueur</h3>
+          <p>Protection des données utilisateurs et respect de la vie privée.</p>
+        </div>
+
+        <div class="eng-card">
+          <img src="./assets/icons/espaces-legalite.webp" alt="Espaces & légalité">
+          <h3>Espaces & légalité</h3>
+          <p>Zones de jeu intelligentes définies à partir des données terrain.</p>
+        </div>
+
+        <div class="eng-card">
+          <img src="./assets/icons/usage-responsable.webp" alt="Usage responsable">
+          <h3>Utilisation responsable</h3>
+          <p>Utilisation raisonnée et utile des mécaniques de jeu.</p>
+        </div>
+
+        <div class="eng-card">
+          <img src="./assets/icons/image-ethique.webp" alt="Image & éthique">
+          <h3>Image & éthique</h3>
+          <p>Le jeu incite, il ne contraint jamais.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter fullbleed section-band">
+  <div class="edge-wrap">
+    <div class="news-wrap">
+      <img class="news-art" src="./assets/artworks/newsletter.webp" alt="Newsletter Dump It">
+
+      <div class="news-panel">
+        <span class="news-tag">Newsletter</span>
+        <h3 class="news-title">Recevoir les prochaines annonces</h3>
+        <p class="news-desc">Build, trailer, bêta, partenariats… l’essentiel. Pas de spam.</p>
+
+        <form class="news-form" action="#" onsubmit="return false;">
+          <input type="email" placeholder="Ton email" required>
+          <button class="btn" type="submit">S’inscrire</button>
+        </form>
+
+        <p class="news-legal">
+          En t’inscrivant, tu acceptes de recevoir des emails liés au projet Dump It.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer fullbleed">
+  <div class="footer-social">
+    <span>Suivre Dump It</span>
+    <div class="social-links">
+      <a href="#" aria-label="X / Twitter">✕</a>
+      <a href="#" aria-label="Instagram">📸</a>
+      <a href="#" aria-label="YouTube">▶</a>
+      <a href="#" aria-label="Discord">💬</a>
+      <a href="#" aria-label="LinkedIn">in</a>
+    </div>
+  </div>
+
+  <div class="wrap footer-main">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="./assets/logo.webp" alt="Logo Dump It">
+        <span>Dump It</span>
+      </div>
+      <a href="#" class="footer-cta">Télécharger l’app</a>
+    </div>
+
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Dump It</h4>
+        <a href="#">À propos</a>
+        <a href="#">Le jeu</a>
+        <a href="#">Communautés</a>
+        <a href="#">Actualités</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Professionnels</h4>
+        <a href="./marques/index.html">Marques</a>
+        <a href="./communes/index.html">Collectivités</a>
+        <a href="#">Partenariats</a>
+        <a href="#">Presse</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="#">Aide</a>
+        <a href="mailto:guillaume.delaune@dumpit.fr">Contact</a>
+        <a href="#">FAQ</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Légal</h4>
+        <a href="#">Confidentialité</a>
+        <a href="#">Conditions d’utilisation</a>
+        <a href="#">Mentions légales</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">© 2026 • Dump It — Tous droits réservés</div>
+</footer>
+
+<script>
+  // STORY: hard scroll-lock (body fixed) + advance panels with wheel/touch
+  (function(){
+    const story = document.getElementById("story");
+    const track = document.getElementById("storyTrack");
+    const progressEl = document.getElementById("storyProgress");
+    const hintEl = document.getElementById("storyHint");
+    const paths = document.getElementById("paths");
+    if(!story || !track || !paths) return;
+
+    const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const panels = Array.from(track.querySelectorAll(".story-panel"));
+    const n = panels.length;
+
+    if(progressEl){
+      progressEl.innerHTML = panels.map((_, i) => `<div class="seg" data-i="${i}"></div>`).join("");
+    }
+    const segs = progressEl ? Array.from(progressEl.querySelectorAll(".seg")) : [];
+
+    let active = 0;
+    let locked = false;
+    let exiting = false;
+
+    let acc = 0;
+    const THRESH = 60;
+
+    // hard lock (body fixed)
+    const body = document.body;
+    let lockY = 0;
+
+    function snapToStoryTop(){
+      const y = window.scrollY + story.getBoundingClientRect().top;
+      window.scrollTo(0, y);
+      return y;
+    }
+
+    function applyBodyLock(y){
+      lockY = y;
+      body.classList.add("scroll-locked");
+      body.style.top = `-${lockY}px`;
+    }
+
+    function removeBodyLock(){
+      body.classList.remove("scroll-locked");
+      body.style.top = "";
+      window.scrollTo(0, lockY);
+    }
+
+    function setActive(i){
+      active = Math.max(0, Math.min(n - 1, i));
+      panels.forEach((p, idx) => {
+        p.classList.toggle("is-active", idx === active);
+        p.classList.toggle("is-before", idx < active);
+      });
+
+      if(segs.length){
+        segs.forEach((s, idx) => {
+          s.classList.toggle("active", idx === active);
+          s.classList.toggle("passed", idx < active);
+        });
+      }
+
+      if(hintEl && active > 0) hintEl.classList.add("hide");
+    }
+
+    setActive(0);
+
+    function inStoryViewport(){
+      const r = story.getBoundingClientRect();
+      const vh = window.innerHeight;
+      return r.top <= (vh * 0.15) && r.bottom >= (vh * 0.85);
+    }
+
+    function lock(){
+      if(locked || exiting) return;
+      locked = true;
+
+      // snap, then hard-lock body so the page cannot drift
+      const y = snapToStoryTop();
+      applyBodyLock(y);
+
+      story.classList.add("is-locked");
+    }
+
+    function unlock(){
+      if(!locked) return;
+      locked = false;
+      story.classList.remove("is-locked");
+      removeBodyLock();
+      acc = 0;
+    }
+
+    function exitToPaths(){
+      if(exiting) return;
+      exiting = true;
+
+      // hide kicker (progress + hint + caption) during the kick
+      story.classList.add("is-exiting");
+      if(hintEl) hintEl.classList.add("hide");
+
+      // unlock first (so we can actually scroll), then kick
+      unlock();
+
+      requestAnimationFrame(() => {
+        paths.scrollIntoView({ block: "start", behavior: prefersReduced ? "auto" : "smooth" });
+      });
+
+      window.setTimeout(() => {
+        story.classList.remove("is-exiting");
+        exiting = false;
+      }, prefersReduced ? 0 : 750);
+    }
+
+    function goNext(){
+      if(active < n - 1) setActive(active + 1);
+      else exitToPaths();
+    }
+
+    function goPrev(){
+      if(active > 0) setActive(active - 1);
+      else {
+        unlock();
+        window.scrollTo({ top: 0, behavior: prefersReduced ? "auto" : "smooth" });
+      }
+    }
+
+    function onProgressClick(e){
+      const seg = e.target.closest(".seg");
+      if(!seg) return;
+      const i = Number(seg.dataset.i);
+      if(Number.isNaN(i)) return;
+      lock();
+      setActive(i);
+    }
+    if(progressEl) progressEl.addEventListener("click", onProgressClick);
+
+    function onWheel(e){
+      if(!locked && !inStoryViewport()) return;
+
+      lock();
+      e.preventDefault();
+
+      acc += e.deltaY;
+      if(Math.abs(acc) < THRESH) return;
+
+      if(acc > 0) goNext(); else goPrev();
+      acc = 0;
+    }
+
+    let touchY = null;
+    function onTouchStart(e){
+      if(!inStoryViewport() && !locked) return;
+      touchY = e.touches && e.touches[0] ? e.touches[0].clientY : null;
+    }
+    function onTouchMove(e){
+      if(touchY === null) return;
+      if(!locked && !inStoryViewport()) return;
+
+      lock();
+
+      const y = e.touches && e.touches[0] ? e.touches[0].clientY : touchY;
+      const dy = touchY - y;
+
+      e.preventDefault();
+
+      acc += dy;
+      touchY = y;
+
+      if(Math.abs(acc) < THRESH) return;
+
+      if(acc > 0) goNext();
+      else goPrev();
+
+      acc = 0;
+    }
+    function onTouchEnd(){ touchY = null; acc = 0; }
+
+    function onKeydown(e){
+      if(!locked && !inStoryViewport()) return;
+
+      const keys = ["ArrowDown","ArrowUp","PageDown","PageUp"," "];
+      if(!keys.includes(e.key)) return;
+
+      lock();
+      e.preventDefault();
+
+      if(e.key === "ArrowUp" || e.key === "PageUp") goPrev();
+      else goNext();
+    }
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("keydown", onKeydown, { passive: false });
+
+    // lock immediately at top on load (home behavior)
+    window.addEventListener("load", () => {
+      const hash = location.hash || "";
+      const nearTop = window.scrollY < 8;
+      if(nearTop && (hash === "" || hash === "#story")) {
+        lock();
+      }
+    }, { once: true });
+
+    // keep your observer behavior (re-lock if user comes back)
+    const obs = new IntersectionObserver((entries) => {
+      const ent = entries[0];
+      if(ent.isIntersecting){
+        if(active < n - 1) lock();
+      }
+    }, { threshold: 0.6 });
+    obs.observe(story);
+
+    window.addEventListener("scroll", () => {
+      if(inStoryViewport() && active < n - 1) lock();
+    }, { passive: true });
+  })();
+
+  // Header visible jusqu'à #how, puis il disparaît
+  (function(){
+    const how = document.getElementById("how");
+    if(!how) return;
+
+    const rootStyles = getComputedStyle(document.documentElement);
+    const headerH = rootStyles.getPropertyValue("--header-h").trim() || "80px";
+
+    const obs = new IntersectionObserver((entries) => {
+      const e = entries[0];
+      document.body.classList.toggle("header-off", e.isIntersecting);
+    }, {
+      root: null,
+      threshold: 0,
+      rootMargin: `-${headerH} 0px 0px 0px`
+    });
+
+    obs.observe(how);
+  })();
+</script>
+
+</body>
+</html>
